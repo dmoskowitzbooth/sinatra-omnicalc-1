@@ -49,9 +49,10 @@ get("/payment/new") do
 end
 
 get ("/payment/results") do
-  @apr=params.fetch("users_apr").to_f
+  @apr=params.fetch("users_apr").to_f.to_fs(:percentage, {:precision => 4})
   @yrs=params.fetch("users_years").to_f
-  @prin=params.fetch("users_pv").to_fs(:currency)
-  @results=params.fetch("users_pv").to_fs(:currency)
+  @prin=params.fetch("users_pv").to_f.to_fs(:currency)
+  @results=(params.fetch("users_pv").to_f*params.fetch("users_apr").to_f)/(1-(1+params.fetch("users_apr").to_f)**(params.fetch("users_years").to_f*-1))
+
   erb(:payment_results)
 end
