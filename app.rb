@@ -7,3 +7,8 @@ get("/") do
   <p>Define some routes in app.rb</p>
   "
 end
+
+get("/square") do
+
+  erb(:square)
+end
