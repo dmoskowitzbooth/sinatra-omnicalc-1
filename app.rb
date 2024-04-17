@@ -50,8 +50,11 @@ end
 
 get ("/payment/results") do
   @apr=params.fetch("users_apr").to_f
+  apr=@apr/100/12
   @yrs=params.fetch("users_years").to_f
   @prin=params.fetch("users_pv").to_f
  
-  @results = @apr/100/12
+  @results = (apr*@prin)/(1-(1+apr)**(@yrs*-12))
+
+  erb(:payment_results)
 end
