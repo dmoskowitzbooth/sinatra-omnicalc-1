@@ -1,5 +1,6 @@
 require "sinatra"
 require "sinatra/reloader"
+require "active_support/all"
 
 get("/") do
   "
@@ -40,4 +41,17 @@ get ("/random/results") do
   @maxi=params.fetch("users_max").to_f
   @results=rand(@mini..@maxi)
   erb(:random_results)
+end
+
+get("/payment/new") do
+
+  erb(:payment)
+end
+
+get ("/payment/results") do
+  @apr=params.fetch("users_apr").to_fs(:percentage, {:precision => 4})
+  @yrs=params.fetch("users_years").to_f
+  @prin=params.fetch("users_pv").to_fs(:currency)
+  @results=params.fetch("users_pv").to_fs(:currency)
+  erb(:payment_results)
 end
